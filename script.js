@@ -160,13 +160,14 @@ switchBtn.addEventListener('click', ()=>{ current=(current+1)%total; showCard(cu
 
 // Media Player
 const audio = new Audio();
-audio.volume = 0.5;
+audio.volume = 0.2;
 const playerCover=document.getElementById("player-cover");
 const playerTitle=document.getElementById("player-title");
 const playerArtist=document.getElementById("player-artist");
 const playPauseBtn=document.getElementById("play-pause-btn");
 const nextBtn=document.getElementById("next-btn");
 const volumeSlider=document.getElementById("volume-slider");
+volumeSlider.value = audio.volume;
 
 function loadSong(index){
   const song = songs[index];
@@ -200,7 +201,9 @@ nextBtn.addEventListener("click", ()=>{
     playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/pause.svg')");
 });
 
-volumeSlider.addEventListener("input", e=>audio.volume=e.target.value/6);
+volumeSlider.addEventListener("input", e => {
+  audio.volume = parseFloat(e.target.value);
+});
 [playerCover,playerTitle,playerArtist].forEach(el=>el.addEventListener("click",()=>window.open(songs[currentSongIndex].spotifyTrack,"_blank")));
 audio.addEventListener("ended",()=>{ currentSongIndex=(currentSongIndex+1)%songs.length; loadSong(currentSongIndex); audio.play(); });
 
